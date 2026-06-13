@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Sales Intelligence Dashboard
+    </title>
+
+    <meta name="description"
+        content="AI-powered sales analytics dashboard with real-time insights, KPIs, and business risk intelligence.">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Outfit:wght@600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="css/style.css">
+
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+
+</head>
+
+<body>
+
+    <!-- ==========================
+     NAVBAR
+    =========================== -->
+
+    <header class="navbar" id="navbar">
+
+        <div class="logo">
+            <span class="logo-icon">📊</span>
+            <span>Sales Intelligence</span>
+        </div>
+
+        <nav>
+
+            <a href="index.html" class="active" id="nav-dashboard">
+                <span class="nav-icon">⚡</span>
+                AI Dashboard
+            </a>
+
+            <a href="tableau.html" id="nav-tableau">
+                <span class="nav-icon">📊</span>
+                Tableau Dashboard
+            </a>
+
+        </nav>
+
+    </header>
+
+    <!-- ==========================
+     EXECUTIVE BRIEF
+    =========================== -->
+
+    <section class="hero" id="heroSection">
+
+        <div class="hero-left">
+
+            <span class="tag">
+                <span class="tag-dot"></span>
+                EXECUTIVE BRIEF
+            </span>
+
+            <h1 id="hookTitle">
+                Loading insight...
+            </h1>
+
+            <p id="executiveSummary">
+                Generating executive summary...
+            </p>
+
+        </div>
+
+        <div class="hero-right">
+
+            <div class="score-card" id="scoreCard">
+
+                <div class="score-label">
+                    Business Health
+                </div>
+
+                <div class="score-ring">
+
+                    <svg viewBox="0 0 160 160">
+
+                        <circle class="ring-bg" cx="80" cy="80" r="60">
+                        </circle>
+
+                        <circle id="healthRing" class="ring-progress" cx="80" cy="80" r="60">
+                        </circle>
+
+                    </svg>
+
+                    <h2 id="businessHealth">
+                        89%
+                    </h2>
+
+                </div>
+
+                <div class="score-status" id="healthStatus">
+                    Calculating...
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+     KPI SECTION
+    =========================== -->
+
+    <section id="kpiSection">
+
+        <h2 class="section-heading">
+            Key Performance Indicators
+        </h2>
+
+        <div class="kpi-grid">
+
+            <div class="kpi-card" id="kpiSales">
+                <div class="kpi-icon kpi-icon-sales">💰</div>
+                <p>Total Sales</p>
+                <h2 id="totalSales">Loading...</h2>
+            </div>
+
+            <div class="kpi-card" id="kpiProfit">
+                <div class="kpi-icon kpi-icon-profit">📈</div>
+                <p>Total Profit</p>
+                <h2 id="totalProfit">Loading...</h2>
+            </div>
+
+            <div class="kpi-card" id="kpiMargin">
+                <div class="kpi-icon kpi-icon-margin">🎯</div>
+                <p>Profit Margin</p>
+                <h2 id="profitMargin">Loading...</h2>
+            </div>
+
+            <div class="kpi-card" id="kpiOrders">
+                <div class="kpi-icon kpi-icon-orders">📦</div>
+                <p>Total Orders</p>
+                <h2 id="totalOrders">Loading...</h2>
+            </div>
+
+            <div class="kpi-card" id="kpiCustomers">
+                <div class="kpi-icon kpi-icon-customers">👥</div>
+                <p>Total Customers</p>
+                <h2 id="totalCustomers">Loading...</h2>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+     RISK MONITOR
+    =========================== -->
+
+    <!-- ==========================
+     ANOMALY DETECTION
+=========================== -->
+
+    <section class="anomaly-section">
+
+        <div class="anomaly-header">
+
+            <div>
+
+                <span class="section-tag">
+
+                    AI ANOMALY DETECTION
+
+                </span>
+
+                <h2>
+
+                    🚨 Anomaly Intelligence Center
+
+                </h2>
+
+                <p class="anomaly-subtitle">
+
+                    Sistem mendeteksi pola tidak normal,
+                    risiko bisnis, dan peluang strategis
+                    berdasarkan analisis data penjualan.
+
+                </p>
+
+            </div>
+
+            <button id="generateNarrative">
+
+                ✨ Generate AI Narrative
+
+            </button>
+
+        </div>
+
+        <!-- SUMMARY -->
+
+        <div class="anomaly-summary">
+
+            <div class="summary-card critical">
+
+                <span class="summary-icon">
+                    🚨
+                </span>
+
+                <div>
+
+                    <h3 id="criticalCount">
+
+                        0
+
+                    </h3>
+
+                    <p>
+                        Critical Alerts
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="summary-card warning">
+
+                <span class="summary-icon">
+                    ⚠️
+                </span>
+
+                <div>
+
+                    <h3 id="warningCount">
+
+                        0
+
+                    </h3>
+
+                    <p>
+                        Warning Alerts
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="summary-card info">
+
+                <span class="summary-icon">
+                    🤖
+                </span>
+
+                <div>
+
+                    <h3 id="anomalyScore">
+
+                        0
+
+                    </h3>
+
+                    <p>
+                        Risk Score
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- TAB -->
+
+        <div class="anomaly-tabs">
+
+            <button class="tab-btn active" onclick="showTab('anomaly')">
+
+                🚨 Detected Anomalies
+
+            </button>
+
+            <button class="tab-btn" onclick="showTab('narrative')">
+
+                🤖 AI Narrative
+
+            </button>
+
+        </div>
+
+        <!-- ANOMALIES -->
+
+        <div id="anomalyContainer" class="tab-content">
+
+        </div>
+
+        <!-- AI NARRATIVE -->
+
+        <div id="narrativeContainer" class="tab-content" style="display:none;">
+
+            <div class="ai-narrative">
+
+                <h3>
+
+                    🤖 AI Executive Analysis
+
+                </h3>
+
+                <p>
+
+                    Klik tombol
+                    <strong>
+                        Generate AI Narrative
+                    </strong>
+
+                    untuk membuat analisis bisnis
+                    otomatis berdasarkan data
+                    penjualan dan anomali yang
+                    terdeteksi.
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+     PERFORMANCE ANALYTICS
+    =========================== -->
+
+    <section id="analyticsSection">
+
+        <h2 class="section-heading">
+            Performance Analytics
+        </h2>
+
+        <div class="chart-grid">
+
+            <div class="chart-card" id="chartTrend">
+                <div class="chart-header">
+                    <h3>📈 Sales Trend</h3>
+                    <span class="chart-badge">Monthly</span>
+                </div>
+                <svg id="salesTrendChart"></svg>
+            </div>
+
+            <div class="chart-card" id="chartTerritory">
+                <div class="chart-header">
+                    <h3>🌎 Profit by Territory</h3>
+                    <span class="chart-badge">Top 5</span>
+                </div>
+                <svg id="territoryChart"></svg>
+            </div>
+
+            <div class="chart-card" id="chartCategory">
+                <div class="chart-header">
+                    <h3>🛒 Sales by Category</h3>
+                    <span class="chart-badge">All</span>
+                </div>
+                <svg id="categoryChart"></svg>
+            </div>
+
+            <div class="chart-card" id="chartSubcategory">
+                <div class="chart-header">
+                    <h3>🏆 Top SubCategory</h3>
+                    <span class="chart-badge">Top 5</span>
+                </div>
+                <svg id="subcategoryChart"></svg>
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+     AI INSIGHT + RECOMMENDATION
+    =========================== -->
+
+    <section class="ai-section">
+
+        <div class="ai-header">
+
+            <div>
+
+                <span class="ai-tag">
+                    AI GENERATED ANALYSIS
+                </span>
+
+                <h2>
+                    🤖 AI Business Insight
+                </h2>
+
+            </div>
+
+            <div class="ai-model">
+
+                Groq • Llama 3.1 8B
+
+            </div>
+
+        </div>
+
+        <div class="ai-card">
+
+            <div id="insightContainer">
+
+                Loading AI Insight...
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ==========================
+     AI ASSISTANT
+    =========================== -->
+
+    <section id="chatSection">
+
+        <h2 class="section-heading">
+            💬 AI Assistant
+        </h2>
+
+        <div class="chat-box" id="chatBox">
+
+            <div class="chat-input-wrap">
+                <input type="text" id="questionInput" placeholder="Ask something about the sales data...">
+            </div>
+
+            <button id="askButton">
+                <span class="btn-icon">✨</span>
+                Generate Insight
+            </button>
+
+        </div>
+
+        <div id="chatResponse"></div>
+
+    </section>
+
+    <!-- ==========================
+     FOOTER
+    =========================== -->
+
+    <footer id="footer">
+
+        <div class="footer-content">
+
+            <p>
+                Dataset: Sales Dataset •
+                Powered by D3.js + AI Analytics
+            </p>
+
+            <p class="footer-sub">
+                Built by Fivediniar Edra Primaulidina
+            </p>
+
+        </div>
+
+    </footer>
+
+    <script src="js/ai.js"></script>
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

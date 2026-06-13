@@ -1,0 +1,283 @@
+{
+    "hook": "97.61% Revenue Berasal dari Bikes",
+    "executiveSummary": "Perusahaan menghasilkan total sales sebesar $5.88M dengan profit $1.31M dan margin 22.28%. Revenue sangat terkonsentrasi pada kategori Bikes yang menyumbang 97.61% penjualan.",
+    "kpis": {
+        "totalSales": 5875869.98,
+        "totalProfit": 1309172.17,
+        "profitMargin": 22.28,
+        "totalOrders": 15173,
+        "totalCustomers": 11875,
+        "totalQuantity": 27274
+    },
+    "topCategory": {
+        "name": "Bikes",
+        "sales": 5735666.16,
+        "percentage": 97.61
+    },
+    "topTerritory": {
+        "name": "Australia",
+        "profit": 333003.84
+    },
+    "topSubCategory": {
+        "name": "Mountain Bikes",
+        "profit": 807145.05
+    },
+    "alerts": [
+        {
+            "severity": "critical",
+            "title": "Revenue Dependency",
+            "description": "97.61% revenue berasal dari Bikes",
+            "impact": "Risiko konsentrasi bisnis tinggi"
+        },
+        {
+            "severity": "warning",
+            "title": "Negative Profit Product",
+            "description": "Clothing menghasilkan profit negatif",
+            "impact": "Loss sebesar $1.203"
+        },
+        {
+            "severity": "warning",
+            "title": "Low Performing Territory",
+            "description": "France memiliki profit terendah",
+            "impact": "Profit hanya $98K"
+        }
+    ],
+    "insights": [
+        "Bikes merupakan kontributor revenue terbesar dengan kontribusi 97.61% terhadap total penjualan.",
+        "Australia menghasilkan profit tertinggi sebesar 333003.84.",
+        "Mountain Bikes merupakan subkategori paling menguntungkan dengan total profit 807145.05."
+    ],
+    "recommendations": [
+        "Pertahankan investasi pada kategori Bikes.",
+        "Replikasi strategi penjualan dari wilayah Australia.",
+        "Evaluasi kategori atau wilayah dengan profit rendah agar margin meningkat."
+    ],
+    "categorySales": [
+        {
+            "Category": "Bikes",
+            "Sales": 5735666.1577779995
+        },
+        {
+            "Category": "Accessories",
+            "Sales": 88974.37332700001
+        },
+        {
+            "Category": "Clothing",
+            "Sales": 51229.445623
+        }
+    ],
+    "territoryProfit": [
+        {
+            "Territory": "Australia",
+            "Profit": 333003.84105000005
+        },
+        {
+            "Territory": "Southwest",
+            "Profit": 287758.53202700004
+        },
+        {
+            "Territory": "Northwest",
+            "Profit": 214422.02010700005
+        },
+        {
+            "Territory": "United Kingdom",
+            "Profit": 120557.18532900001
+        },
+        {
+            "Territory": "Germany",
+            "Profit": 120471.11278000001
+        },
+        {
+            "Territory": "Canada",
+            "Profit": 101222.80782900004
+        },
+        {
+            "Territory": "France",
+            "Profit": 98404.793736
+        },
+        {
+            "Territory": "Central",
+            "Profit": 16108.410814000017
+        },
+        {
+            "Territory": "Northeast",
+            "Profit": 9347.874817000018
+        },
+        {
+            "Territory": "Southeast",
+            "Profit": 7875.59363900002
+        }
+    ],
+    "subcategoryProfit": [
+        {
+            "SubCategory": "Mountain Bikes",
+            "Profit": 807145.0515080001
+        },
+        {
+            "SubCategory": "Road Bikes",
+            "Profit": 449534.8144700001
+        },
+        {
+            "SubCategory": "Tires and Tubes",
+            "Profit": 37760.1731
+        },
+        {
+            "SubCategory": "Bottles and Cages",
+            "Profit": 15935.328827000001
+        },
+        {
+            "SubCategory": "Caps",
+            "Profit": -1203.1957769999997
+        }
+    ],
+    "salesTrend": [
+        {
+            "OrderDate": "2001-07",
+            "Sales": 83938.978
+        },
+        {
+            "OrderDate": "2001-08",
+            "Sales": 164415.424264
+        },
+        {
+            "OrderDate": "2001-09",
+            "Sales": 111356.8495
+        },
+        {
+            "OrderDate": "2001-10",
+            "Sales": 137685.639
+        },
+        {
+            "OrderDate": "2001-11",
+            "Sales": 196791.281936
+        },
+        {
+            "OrderDate": "2001-12",
+            "Sales": 177302.655936
+        },
+        {
+            "OrderDate": "2002-01",
+            "Sales": 149701.3485
+        },
+        {
+            "OrderDate": "2002-02",
+            "Sales": 147924.809608
+        },
+        {
+            "OrderDate": "2002-03",
+            "Sales": 173478.712
+        },
+        {
+            "OrderDate": "2002-04",
+            "Sales": 134791.904
+        },
+        {
+            "OrderDate": "2002-05",
+            "Sales": 216045.623452
+        },
+        {
+            "OrderDate": "2002-06",
+            "Sales": 159466.449
+        },
+        {
+            "OrderDate": "2002-07",
+            "Sales": 115011.473122
+        },
+        {
+            "OrderDate": "2002-08",
+            "Sales": 131643.871037
+        },
+        {
+            "OrderDate": "2002-09",
+            "Sales": 120484.592857
+        },
+        {
+            "OrderDate": "2002-10",
+            "Sales": 80756.17182
+        },
+        {
+            "OrderDate": "2002-11",
+            "Sales": 119186.552636
+        },
+        {
+            "OrderDate": "2002-12",
+            "Sales": 122410.465164
+        },
+        {
+            "OrderDate": "2003-01",
+            "Sales": 95109.1885
+        },
+        {
+            "OrderDate": "2003-02",
+            "Sales": 136350.4769
+        },
+        {
+            "OrderDate": "2003-03",
+            "Sales": 101865.298036
+        },
+        {
+            "OrderDate": "2003-04",
+            "Sales": 103618.952608
+        },
+        {
+            "OrderDate": "2003-05",
+            "Sales": 124190.024452
+        },
+        {
+            "OrderDate": "2003-06",
+            "Sales": 113216.701988
+        },
+        {
+            "OrderDate": "2003-07",
+            "Sales": 172974.726906
+        },
+        {
+            "OrderDate": "2003-08",
+            "Sales": 233807.036909
+        },
+        {
+            "OrderDate": "2003-09",
+            "Sales": 228904.524736
+        },
+        {
+            "OrderDate": "2003-10",
+            "Sales": 196775.126985
+        },
+        {
+            "OrderDate": "2003-11",
+            "Sales": 200773.793424
+        },
+        {
+            "OrderDate": "2003-12",
+            "Sales": 261181.92885
+        },
+        {
+            "OrderDate": "2004-01",
+            "Sales": 186265.190468
+        },
+        {
+            "OrderDate": "2004-02",
+            "Sales": 218841.757792
+        },
+        {
+            "OrderDate": "2004-03",
+            "Sales": 218652.362428
+        },
+        {
+            "OrderDate": "2004-04",
+            "Sales": 209789.89648
+        },
+        {
+            "OrderDate": "2004-05",
+            "Sales": 274591.648008
+        },
+        {
+            "OrderDate": "2004-06",
+            "Sales": 251090.149426
+        },
+        {
+            "OrderDate": "2004-07",
+            "Sales": 5478.39
+        }
+    ]
+}

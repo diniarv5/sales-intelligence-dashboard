@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Tableau Dashboard
+    </title>
+
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/tableau.css">
+
+</head>
+
+<body>
+
+    <!-- ==========================
+         NAVBAR
+    =========================== -->
+
+    <header class="navbar">
+
+        <div class="logo">
+
+            <span class="logo-icon">
+                📊
+            </span>
+
+            <div class="logo-text">
+
+                <span class="logo-title">
+                    Sales Intelligence
+                </span>
+
+                <span class="logo-subtitle">
+                    Business Analytics Dashboard
+                </span>
+
+            </div>
+
+        </div>
+
+        <nav>
+
+            <a href="index.html" id="nav-dashboard">
+
+                <span class="nav-icon">
+                    ⚡
+                </span>
+
+                AI Dashboard
+
+            </a>
+
+            <a href="tableau.html" class="active" id="nav-tableau">
+
+                <span class="nav-icon">
+                    📊
+                </span>
+
+                Tableau Dashboard
+
+            </a>
+
+        </nav>
+
+    </header>
+
+    <!-- ==========================
+         PAGE WRAPPER
+    =========================== -->
+
+    <div class="tableau-page">
+
+        <!-- HEADER -->
+
+        <section class="tableau-header">
+
+            <div class="tableau-header-content">
+
+                <h1>
+
+                    Executive Business Summary Dashboard
+
+                </h1>
+
+                <p>
+
+                    Interactive business intelligence dashboard
+                    untuk memantau performa penjualan,
+                    profitabilitas wilayah,
+                    kontribusi produk,
+                    dan tren bisnis perusahaan.
+
+                </p>
+
+            </div>
+
+            <a href="https://public.tableau.com/views/ExecutiveBusinessSummary/ExecutiveBusinessSummary" target="_blank"
+                class="tableau-btn">
+
+                Buka di Tableau Public ↗
+
+            </a>
+
+        </section>
+
+        <!-- TABLEAU DASHBOARD -->
+
+        <section class="tableau-card">
+
+            <div class="tableauPlaceholder" id="viz1781361040100">
+
+                <noscript>
+
+                    <a href="#">
+
+                        <img alt="Executive Business Summary"
+                            src="https://public.tableau.com/static/images/Ex/ExecutiveBusinessSummary/ExecutiveBusinessSummary/1_rss.png"
+                            style="border:none">
+
+                    </a>
+
+                </noscript>
+
+                <object class="tableauViz" style="display:none;">
+
+                    <param name="host_url" value="https%3A%2F%2Fpublic.tableau.com%2F">
+
+                    <param name="embed_code_version" value="3">
+
+                    <param name="site_root" value="">
+
+                    <param name="name" value="ExecutiveBusinessSummary/ExecutiveBusinessSummary">
+
+                    <param name="tabs" value="no">
+
+                    <param name="toolbar" value="yes">
+
+                    <param name="animate_transition" value="yes">
+
+                    <param name="display_static_image" value="yes">
+
+                    <param name="display_spinner" value="yes">
+
+                    <param name="display_overlay" value="yes">
+
+                    <param name="display_count" value="yes">
+
+                    <param name="language" value="en-US">
+
+                </object>
+
+            </div>
+
+        </section>
+
+    </div>
+
+    <!-- TABLEAU SCRIPT -->
+
+    <script>
+
+        var divElement =
+            document.getElementById(
+                "viz1781361040100"
+            );
+
+        var vizElement =
+            divElement.getElementsByTagName(
+                "object"
+            )[0];
+
+        vizElement.style.width =
+            "100%";
+
+        vizElement.style.height =
+            "1400px";
+
+        var scriptElement =
+            document.createElement(
+                "script"
+            );
+
+        scriptElement.src =
+            "https://public.tableau.com/javascripts/api/viz_v1.js";
+
+        vizElement.parentNode.insertBefore(
+            scriptElement,
+            vizElement
+        );
+
+    </script>
+
+</body>
+
+</html>
