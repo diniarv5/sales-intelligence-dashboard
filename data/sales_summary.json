@@ -5,7 +5,7 @@
         "totalSales": 5875869.98,
         "totalProfit": 1309172.17,
         "profitMargin": 22.28,
-        "totalOrders": 15173,
+        "totalOrders": 18106,
         "totalCustomers": 11875,
         "totalQuantity": 27274
     },
@@ -24,22 +24,19 @@
     },
     "alerts": [
         {
-            "severity": "critical",
-            "title": "Revenue Dependency",
-            "description": "97.61% revenue berasal dari Bikes",
-            "impact": "Risiko konsentrasi bisnis tinggi"
+            "type": "critical",
+            "title": "Revenue Drop Anomaly: 2004-07",
+            "description": "-97.8% dibanding bulan sebelumnya"
         },
         {
-            "severity": "warning",
-            "title": "Negative Profit Product",
-            "description": "Clothing menghasilkan profit negatif",
-            "impact": "Loss sebesar $1.203"
+            "type": "critical",
+            "title": "Negative Profit Anomaly: Caps",
+            "description": "Profit -$1,203"
         },
         {
-            "severity": "warning",
-            "title": "Low Performing Territory",
-            "description": "France memiliki profit terendah",
-            "impact": "Profit hanya $98K"
+            "type": "warning",
+            "title": "Territory Profit Outlier: Southeast",
+            "description": "Profit $7,875, terendah dari seluruh territory"
         }
     ],
     "insights": [
@@ -69,7 +66,7 @@
     "territoryProfit": [
         {
             "Territory": "Australia",
-            "Profit": 333003.84105000005
+            "Profit": 333003.84105
         },
         {
             "Territory": "Southwest",
@@ -77,15 +74,15 @@
         },
         {
             "Territory": "Northwest",
-            "Profit": 214422.02010700005
+            "Profit": 214422.02010700002
         },
         {
             "Territory": "United Kingdom",
-            "Profit": 120557.18532900001
+            "Profit": 120557.185329
         },
         {
             "Territory": "Germany",
-            "Profit": 120471.11278000001
+            "Profit": 120471.11278
         },
         {
             "Territory": "Canada",
@@ -97,11 +94,11 @@
         },
         {
             "Territory": "Central",
-            "Profit": 16108.410814000017
+            "Profit": 16108.410814000015
         },
         {
             "Territory": "Northeast",
-            "Profit": 9347.874817000018
+            "Profit": 9347.874817000016
         },
         {
             "Territory": "Southeast",
@@ -115,7 +112,7 @@
         },
         {
             "SubCategory": "Road Bikes",
-            "Profit": 449534.8144700001
+            "Profit": 449534.81447000004
         },
         {
             "SubCategory": "Tires and Tubes",
@@ -123,11 +120,11 @@
         },
         {
             "SubCategory": "Bottles and Cages",
-            "Profit": 15935.328827000001
+            "Profit": 15935.328827
         },
         {
             "SubCategory": "Caps",
-            "Profit": -1203.1957769999997
+            "Profit": -1203.1957770000008
         }
     ],
     "salesTrend": [
@@ -217,7 +214,7 @@
         },
         {
             "OrderDate": "2003-04",
-            "Sales": 103618.952608
+            "Sales": 103618.95260799999
         },
         {
             "OrderDate": "2003-05",
@@ -241,7 +238,7 @@
         },
         {
             "OrderDate": "2003-10",
-            "Sales": 196775.126985
+            "Sales": 196775.12698499998
         },
         {
             "OrderDate": "2003-11",
