@@ -2172,3 +2172,25 @@ footer {
     font-weight: 600;
 
 }
+
+#chartTrend {
+
+    grid-column: 1 / -1;
+
+    width: 100%;
+
+    max-width: 1400px;
+
+    margin: 0 auto;
+
+}
+
+#salesTrendChart {
+
+    width: 100%;
+
+    height: 550px;
+
+    display: block;
+
+}
