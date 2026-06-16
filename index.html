@@ -36,25 +36,162 @@
     <header class="navbar" id="navbar">
 
         <div class="logo">
-            <span class="logo-icon">📊</span>
+            <img src="assets/dasboard.png" class="logo-icon" alt="Dashboard">
             <span>Sales Intelligence</span>
         </div>
 
         <nav>
 
             <a href="index.html" class="active" id="nav-dashboard">
-                <span class="nav-icon">⚡</span>
+                <img src="assets/dasboard.png" class="nav-icon-img" alt="Dashboard">
                 AI Dashboard
             </a>
 
             <a href="tableau.html" id="nav-tableau">
-                <span class="nav-icon">📊</span>
+                <img src="assets/tableau.png" class="nav-icon-img" alt="Tableau">
                 Tableau Dashboard
             </a>
 
         </nav>
 
     </header>
+
+    <!-- ==========================
+     FILTER SECTION
+=========================== -->
+
+    <section class="filter-section">
+
+        <div class="filter-wrap">
+
+            <div class="filter-header">
+
+                <h2>
+                    Filter Dashboard
+                </h2>
+
+                <p>
+                    Filter data berdasarkan periode, kategori, dan wilayah.
+                </p>
+
+            </div>
+
+            <div class="filter-grid">
+
+                <div class="filter-group">
+
+                    <label>Order Date From</label>
+
+                    <input type="date" id="dateFrom" value="2001-01-01">
+
+                </div>
+
+                <div class="filter-group">
+
+                    <label>Order Date To</label>
+
+                    <input type="date" id="dateTo" value="2004-12-31">
+
+                </div>
+
+                <div class="filter-group">
+
+                    <label>Category</label>
+
+                    <select id="selCategory">
+
+                        <option value="">
+                            All Category
+                        </option>
+
+                        <option value="Bikes">
+                            Bikes
+                        </option>
+
+                        <option value="Accessories">
+                            Accessories
+                        </option>
+
+                        <option value="Clothing">
+                            Clothing
+                        </option>
+
+                    </select>
+
+                </div>
+
+                <div class="filter-group">
+
+                    <label>Territory</label>
+
+                    <select id="selTerritory">
+
+                        <option value="">
+                            All Territory
+                        </option>
+
+                        <option value="Australia">
+                            Australia
+                        </option>
+
+                        <option value="Canada">
+                            Canada
+                        </option>
+
+                        <option value="Germany">
+                            Germany
+                        </option>
+
+                        <option value="France">
+                            France
+                        </option>
+
+                        <option value="United Kingdom">
+                            United Kingdom
+                        </option>
+
+                        <option value="Southwest">
+                            Southwest
+                        </option>
+
+                        <option value="Northwest">
+                            Northwest
+                        </option>
+
+                        <option value="Northeast">
+                            Northeast
+                        </option>
+
+                        <option value="Southeast">
+                            Southeast
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+            <div class="filter-actions">
+
+                <button id="applyFilterBtn">
+
+                    Apply Filter
+
+                </button>
+
+                <button id="resetFilterBtn">
+
+                    Reset
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </section>
+
 
     <!-- ==========================
      EXECUTIVE BRIEF
@@ -128,31 +265,31 @@
         <div class="kpi-grid">
 
             <div class="kpi-card" id="kpiSales">
-                <div class="kpi-icon kpi-icon-sales">💰</div>
+                <img src="assets/sales.png" class="kpi-icon-img" alt="Sales">
                 <p>Total Sales</p>
                 <h2 id="totalSales">Loading...</h2>
             </div>
 
             <div class="kpi-card" id="kpiProfit">
-                <div class="kpi-icon kpi-icon-profit">📈</div>
+                <img src="assets/profit.png" class="kpi-icon-img" alt="Profit">
                 <p>Total Profit</p>
                 <h2 id="totalProfit">Loading...</h2>
             </div>
 
             <div class="kpi-card" id="kpiMargin">
-                <div class="kpi-icon kpi-icon-margin">🎯</div>
+                <img src="assets/margin.png" class="kpi-icon-img" alt="Margin">
                 <p>Profit Margin</p>
                 <h2 id="profitMargin">Loading...</h2>
             </div>
 
             <div class="kpi-card" id="kpiOrders">
-                <div class="kpi-icon kpi-icon-orders">📦</div>
+                <img src="assets/order.png" class="kpi-icon-img" alt="Orders">
                 <p>Total Orders</p>
                 <h2 id="totalOrders">Loading...</h2>
             </div>
 
             <div class="kpi-card" id="kpiCustomers">
-                <div class="kpi-icon kpi-icon-customers">👥</div>
+                <img src="assets/customer.png" class="kpi-icon-img" alt="Customers">
                 <p>Total Customers</p>
                 <h2 id="totalCustomers">Loading...</h2>
             </div>
@@ -181,9 +318,11 @@
 
                 </span>
 
-                <h2>
+                <h2 class="anomaly-title-text">
 
-                    🚨 Anomaly Intelligence Center
+                    <img src="assets/alert.png" alt="Alert" class="title-icon">
+
+                    Data Anomaly Detection
 
                 </h2>
 
@@ -199,7 +338,9 @@
 
             <button id="generateNarrative">
 
-                ✨ Generate AI Narrative
+                <img src="assets/ainarrative.png" alt="AI Narrative" class="btn-icon">
+
+                AI Narrative
 
             </button>
 
@@ -211,9 +352,7 @@
 
             <div class="summary-card critical">
 
-                <span class="summary-icon">
-                    🚨
-                </span>
+                <img src="assets/alert.png" class="summary-icon" alt="Dashboard">
 
                 <div>
 
@@ -233,9 +372,7 @@
 
             <div class="summary-card warning">
 
-                <span class="summary-icon">
-                    ⚠️
-                </span>
+                <img src="assets/warning.png" class="summary-icon" alt="Dashboard">
 
                 <div>
 
@@ -255,9 +392,7 @@
 
             <div class="summary-card info">
 
-                <span class="summary-icon">
-                    🤖
-                </span>
+                <img src="assets/ai.png" class="summary-icon" alt="Dashboard">
 
                 <div>
 
@@ -283,13 +418,17 @@
 
             <button class="tab-btn active" onclick="showTab('anomaly')">
 
-                🚨 Detected Anomalies
+                <img src="assets/alert.png" class="tab-icon" alt="Anomaly">
+
+                Detected Anomalies
 
             </button>
 
             <button class="tab-btn" onclick="showTab('narrative')">
 
-                🤖 AI Narrative
+                <img src="assets/ai.png" alt="AI Narrative" class="btn-icon">
+
+                AI Narrative
 
             </button>
 
@@ -346,35 +485,113 @@
         <div class="chart-grid">
 
             <div class="chart-card" id="chartTrend">
+
                 <div class="chart-header">
-                    <h3>📈 Sales Trend</h3>
-                    <span class="chart-badge">Monthly</span>
+
+                    <h3>
+
+                        <img src="assets/profit.png" class="chart-title-icon1" alt="Sales Trend">
+
+                        Sales Trend
+
+                    </h3>
+
+                    <span class="chart-badge">
+                        Monthly
+                    </span>
+
                 </div>
+
                 <svg id="salesTrendChart"></svg>
+
             </div>
 
             <div class="chart-card" id="chartTerritory">
+
                 <div class="chart-header">
-                    <h3>🌎 Profit by Territory</h3>
-                    <span class="chart-badge">Top 5</span>
+
+                    <h3>
+
+                        <img src="assets/territory.png" class="chart-title-icon1" alt="Territory">
+
+                        Profit by Territory
+
+                    </h3>
+
+                    <span class="chart-badge">
+                        Top 5
+                    </span>
+
                 </div>
+
                 <svg id="territoryChart"></svg>
+
+            </div>
+
+            <div class="chart-card" id="chartScatter">
+
+                <div class="chart-header">
+
+                    <h3>
+
+                        <img src="assets/profit.png" class="chart-title-icon1" alt="Scatter">
+
+                        Sales vs Profit
+
+                    </h3>
+
+                    <span class="chart-badge">
+                        By SubCategory
+                    </span>
+
+                </div>
+
+                <svg id="scatterChart"></svg>
+
             </div>
 
             <div class="chart-card" id="chartCategory">
+
                 <div class="chart-header">
-                    <h3>🛒 Sales by Category</h3>
-                    <span class="chart-badge">All</span>
+
+                    <h3>
+
+                        <img src="assets/cart.png" class="chart-title-icon1" alt="Sales Category">
+
+                        Sales by Category
+
+                    </h3>
+
+                    <span class="chart-badge">
+                        All
+                    </span>
+
                 </div>
+
                 <svg id="categoryChart"></svg>
+
             </div>
 
             <div class="chart-card" id="chartSubcategory">
+
                 <div class="chart-header">
-                    <h3>🏆 Top SubCategory</h3>
-                    <span class="chart-badge">Top 5</span>
+
+                    <h3>
+
+                        <img src="assets/TopSubCategory.png" class="chart-title-icon1" alt="Top SubCategory">
+
+                        Top SubCategory
+
+                    </h3>
+
+                    <span class="chart-badge">
+                        Top 5
+                    </span>
+
                 </div>
+
                 <svg id="subcategoryChart"></svg>
+
             </div>
 
         </div>
@@ -392,11 +609,15 @@
             <div>
 
                 <span class="ai-tag">
-                    AI GENERATED ANALYSIS
+                    AUTOMATED ANALYSIS
                 </span>
 
-                <h2>
-                    🤖 AI Business Insight
+                <h2 class="insight-title">
+
+                    <img src="assets/ai.png" class="title-icon2" alt="Insight">
+
+                    Business Insights
+
                 </h2>
 
             </div>
@@ -427,8 +648,12 @@
 
     <section id="chatSection">
 
-        <h2 class="section-heading">
-            💬 AI Assistant
+        <h2 class="section-heading1">
+
+            <img src="assets/message.png" class="section-icon1" alt="Business Assistant">
+
+            Business Assistant
+
         </h2>
 
         <div class="chat-box" id="chatBox">
@@ -438,7 +663,7 @@
             </div>
 
             <button id="askButton">
-                <span class="btn-icon">✨</span>
+                <img src="assets/ainarrative.png" alt="AI Narrative" class="btn-icon">
                 Generate Insight
             </button>
 
