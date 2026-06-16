@@ -276,5 +276,32 @@
             "OrderDate": "2004-07",
             "Sales": 5478.39
         }
+    ],
+    "scatterData": [
+        {
+            "SubCategory": "Mountain Bikes",
+            "Sales": 3540109.88,
+            "Profit": 807145.05
+        },
+        {
+            "SubCategory": "Road Bikes",
+            "Sales": 1971643.92,
+            "Profit": 449534.81
+        },
+        {
+            "SubCategory": "Tires and Tubes",
+            "Sales": 84286.1,
+            "Profit": 37760.17
+        },
+        {
+            "SubCategory": "Bottles and Cages",
+            "Sales": 35569.93,
+            "Profit": 15935.33
+        },
+        {
+            "SubCategory": "Caps",
+            "Sales": 24063.92,
+            "Profit": -1203.2
+        }
     ]
 }
