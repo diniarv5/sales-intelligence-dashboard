@@ -74,12 +74,258 @@ async function loadDashboard() {
         renderTerritoryChart(data);
         renderSubcategoryChart(data);
         renderSalesTrend(data);
+        renderScatterPlot(data);
+        renderScatterPlot(data);
 
     } catch (error) {
 
         console.error(error);
 
     }
+
+}
+
+// ==========================
+// SCATTER PLOT: SALES VS PROFIT
+// ==========================
+
+function renderScatterPlot(data) {
+
+    const svg =
+        d3.select(
+            "#scatterChart"
+        );
+
+    svg.selectAll("*").remove();
+
+    const width = 500;
+    const height = 320;
+    const margin = {
+        top: 20,
+        right: 30,
+        bottom: 50,
+        left: 60
+    };
+
+    svg.attr(
+        "viewBox",
+        `0 0 ${width} ${height}`
+    );
+
+    // Ambil data scatter dari JSON,
+    // fallback ke salesBySubCategory
+    const raw =
+        data.scatterData ||
+        data.salesBySubCategory ||
+        [];
+
+    if (raw.length === 0) return;
+
+    const chartData = raw.map(d => ({
+        name: d.SubCategory || d.name || "?",
+        sales: +d.Sales || +d.sales || 0,
+        profit: +d.Profit || +d.profit || 0
+    }));
+
+    // =====================
+    // SKALA
+    // =====================
+
+    const x =
+        d3.scaleLinear()
+            .domain([
+                0,
+                d3.max(chartData, d => d.sales) * 1.1
+            ])
+            .range([
+                margin.left,
+                width - margin.right
+            ]);
+
+    const y =
+        d3.scaleLinear()
+            .domain([
+                d3.min(chartData, d => d.profit) * 1.2,
+                d3.max(chartData, d => d.profit) * 1.2
+            ])
+            .range([
+                height - margin.bottom,
+                margin.top
+            ]);
+
+    // =====================
+    // ZERO LINE (profit = 0)
+    // =====================
+
+    svg.append("line")
+        .attr("x1", margin.left)
+        .attr("x2", width - margin.right)
+        .attr("y1", y(0))
+        .attr("y2", y(0))
+        .attr("stroke", "#ef4444")
+        .attr("stroke-width", 1)
+        .attr("stroke-dasharray", "4 3")
+        .attr("opacity", 0.5);
+
+    // =====================
+    // AXIS
+    // =====================
+
+    svg.append("g")
+        .attr(
+            "transform",
+            `translate(0, ${height - margin.bottom})`
+        )
+        .call(
+            d3.axisBottom(x)
+                .ticks(5)
+                .tickFormat(d =>
+                    "$" + (d / 1000).toFixed(0) + "K"
+                )
+        )
+        .selectAll("text")
+        .style("font-size", "10px");
+
+    svg.append("g")
+        .attr(
+            "transform",
+            `translate(${margin.left}, 0)`
+        )
+        .call(
+            d3.axisLeft(y)
+                .ticks(5)
+                .tickFormat(d =>
+                    "$" + (d / 1000).toFixed(0) + "K"
+                )
+        )
+        .selectAll("text")
+        .style("font-size", "10px");
+
+    // =====================
+    // AXIS LABEL
+    // =====================
+
+    svg.append("text")
+        .attr("x", width / 2)
+        .attr("y", height - 5)
+        .attr("text-anchor", "middle")
+        .style("font-size", "11px")
+        .style("fill", "#64748b")
+        .text("Total Sales");
+
+    svg.append("text")
+        .attr(
+            "transform",
+            `rotate(-90)`
+        )
+        .attr("x", -(height / 2))
+        .attr("y", 14)
+        .attr("text-anchor", "middle")
+        .style("font-size", "11px")
+        .style("fill", "#64748b")
+        .text("Total Profit");
+
+    // =====================
+    // DOTS
+    // =====================
+
+    const colorScale =
+        d3.scaleOrdinal(
+            d3.schemeTableau10
+        );
+
+    svg.selectAll(".scatter-dot")
+        .data(chartData)
+        .enter()
+        .append("circle")
+
+        .attr("class", "scatter-dot")
+
+        .attr("cx", d => x(d.sales))
+
+        .attr("cy", d => y(d.profit))
+
+        .attr("r", 8)
+
+        .attr("fill", (d, i) =>
+            colorScale(i)
+        )
+
+        .attr("opacity", 0.8)
+
+        .attr("stroke", "#ffffff")
+
+        .attr("stroke-width", 1.5)
+
+        .style("cursor", "pointer")
+
+        .on("mouseover", function (event, d) {
+
+            d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", 12)
+                .attr("opacity", 1);
+
+            showTooltip(event, `
+                <span class="tooltip-icon">🎯</span>
+                <span class="tooltip-title">
+                    ${d.name}
+                </span>
+
+                <div>
+                    <span class="tooltip-label">Sales</span><br>
+                    <span class="tooltip-value">
+                        $${Math.round(d.sales).toLocaleString()}
+                    </span>
+                </div>
+
+                <div style="margin-top:6px">
+                    <span class="tooltip-label">Profit</span><br>
+                    <span class="${d.profit < 0 ? 'tooltip-loss' : 'tooltip-profit'}">
+                        $${Math.round(d.profit).toLocaleString()}
+                    </span>
+                </div>
+            `);
+
+        })
+
+        .on("mousemove", moveTooltip)
+
+        .on("mouseout", function () {
+
+            d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", 8)
+                .attr("opacity", 0.8);
+
+            hideTooltip();
+
+        });
+
+    // =====================
+    // LABEL NAMA
+    // =====================
+
+    svg.selectAll(".scatter-label")
+        .data(chartData)
+        .enter()
+        .append("text")
+
+        .attr("class", "scatter-label")
+
+        .attr("x", d => x(d.sales) + 10)
+
+        .attr("y", d => y(d.profit) + 4)
+
+        .style("font-size", "9px")
+
+        .style("fill", "#475569")
+
+        .style("font-weight", "600")
+
+        .text(d => d.name);
 
 }
 
@@ -248,10 +494,14 @@ function populateAlerts(data) {
     if (container) {
         data.alerts.forEach(alert => {
 
-            let icon = "⚠️";
+            let icon = `
+                <img src="assets/warning.png" class="alert-icon" alt="Critical">
+                `;
 
             if ((alert.severity || alert.type) === "critical") {
-                icon = "🚨";
+                icon = `
+                <img src="assets/alert.png" class="alert-icon" alt="Critical">
+                `;
             }
 
             container.innerHTML += `
@@ -460,7 +710,14 @@ function populateInsights(data) {
     <div class="insight-item">
 
         <div class="insight-title">
-            🚲 Revenue Concentration
+
+            <img
+                src="assets/bike.png"
+                class="chart-title-icon1"
+                alt="Revenue Concentration">
+
+            Revenue Concentration
+
         </div>
 
         <div class="insight-text">
@@ -515,7 +772,14 @@ function populateInsights(data) {
     <div class="insight-item">
 
         <div class="insight-title">
-            🌎 Territory Performance
+
+            <img
+                src="assets/territory.png"
+                class="chart-title-icon1"
+                alt="Territory Performance">
+
+            Territory Performance
+
         </div>
 
         <div class="insight-text">
@@ -573,7 +837,14 @@ function populateInsights(data) {
     <div class="insight-item">
 
         <div class="insight-title">
-            🏆 Product Opportunity
+
+            <img
+                src="assets/TopSubCategory.png"
+                class="chart-title-icon1"
+                alt="Product Opportunity">
+
+            Product Opportunity
+
         </div>
 
         <div class="insight-text">
@@ -1095,6 +1366,15 @@ function renderCategoryChart(data) {
 
         .on("mouseout", hideTooltip);
 
+    // INSIGHT BOX
+    const topCat = data.categorySales[0];
+    const topPct = ((topCat.Sales / data.kpis.totalSales) * 100).toFixed(1);
+    renderChartInsight(
+        "chartCategory",
+        "Sales by Category",
+        `<strong>${topCat.Category}</strong> mendominasi penjualan dengan kontribusi <strong>${topPct}%</strong> dari total revenue. Kategori lain (Accessories & Clothing) masih sangat jauh di bawah — ini sinyal risiko konsentrasi yang perlu diwaspadai.`
+    );
+
 }
 
 function renderTerritoryChart(data) {
@@ -1402,6 +1682,15 @@ function renderTerritoryChart(data) {
         .call(
             d3.axisLeft(y)
         );
+
+    // INSIGHT BOX
+    const top = data.territoryProfit[0];
+    const last = data.territoryProfit.slice(-1)[0];
+    renderChartInsight(
+        "chartTerritory",
+        "Profit by Territory",
+        `<strong>${top.Territory}</strong> memimpin profit dengan <strong>$${Math.round(top.Profit).toLocaleString()}</strong> — hampir <strong>${Math.round(top.Profit / last.Profit)}x lipat</strong> dibanding territory terbawah (${last.Territory}: $${Math.round(last.Profit).toLocaleString()}). Strategi dari wilayah terbaik perlu direplikasi ke territory lain.`
+    );
 
 }
 
@@ -1723,6 +2012,18 @@ function renderSubcategoryChart(data) {
             d3.axisLeft(y)
         );
 
+    // INSIGHT BOX
+    const topSub = data.subcategoryProfit[0];
+    const lossSub = data.subcategoryProfit.find(d => d.Profit < 0);
+    const lossNote = lossSub
+        ? ` Perhatikan <strong>${lossSub.SubCategory}</strong> yang mencatat kerugian $${Math.abs(Math.round(lossSub.Profit)).toLocaleString()} — perlu evaluasi harga atau strategi penjualan.`
+        : "";
+    renderChartInsight(
+        "chartSubcategory",
+        "Top SubCategory",
+        `<strong>${topSub.SubCategory}</strong> adalah subkategori paling menguntungkan dengan profit <strong>$${Math.round(topSub.Profit).toLocaleString()}</strong>.${lossNote}`
+    );
+
 }
 
 function renderSalesTrend(data) {
@@ -1932,5 +2233,334 @@ function renderSalesTrend(data) {
 
             }
         );
+
+    // INSIGHT BOX
+    const trend = data.salesTrend;
+    const peak = trend.reduce((a, b) => a.Sales > b.Sales ? a : b);
+    const drop = trend.find(d => d.OrderDate === "2004-07");
+    renderChartInsight(
+        "chartTrend",
+        "Sales Trend",
+        `Puncak penjualan terjadi pada <strong>${peak.OrderDate}</strong> dengan total <strong>$${Math.round(peak.Sales).toLocaleString()}</strong>. ${drop ? `Anomali penurunan tajam terdeteksi pada <strong>2004-07</strong> ($${Math.round(drop.Sales).toLocaleString()}) — perlu investigasi lebih lanjut apakah terkait data tidak lengkap atau kondisi bisnis.` : ""}`
+    );
+
+}
+// ==========================
+// SCATTER PLOT: SALES VS PROFIT
+// ==========================
+
+function renderScatterPlot(data) {
+
+    const svg =
+        d3.select(
+            "#scatterChart"
+        );
+
+    svg.selectAll("*").remove();
+
+    const width = 500;
+    const height = 320;
+    const margin = {
+        top: 20,
+        right: 30,
+        bottom: 50,
+        left: 65
+    };
+
+    svg.attr(
+        "viewBox",
+        `0 0 ${width} ${height}`
+    );
+
+    const raw =
+        data.scatterData || [];
+
+    if (raw.length === 0) return;
+
+    const chartData = raw.map(d => ({
+        name: d.SubCategory,
+        sales: +d.Sales,
+        profit: +d.Profit
+    }));
+
+    // =====================
+    // SKALA
+    // =====================
+
+    const x =
+        d3.scaleLinear()
+            .domain([
+                0,
+                d3.max(chartData, d => d.sales) * 1.1
+            ])
+            .range([
+                margin.left,
+                width - margin.right
+            ]);
+
+    const yMin = d3.min(chartData, d => d.profit);
+    const yMax = d3.max(chartData, d => d.profit);
+
+    const y =
+        d3.scaleLinear()
+            .domain([
+                yMin < 0 ? yMin * 1.3 : 0,
+                yMax * 1.2
+            ])
+            .range([
+                height - margin.bottom,
+                margin.top
+            ]);
+
+    // =====================
+    // GRID LINES
+    // =====================
+
+    svg.append("g")
+        .attr("class", "grid")
+        .attr(
+            "transform",
+            `translate(0, ${height - margin.bottom})`
+        )
+        .call(
+            d3.axisBottom(x)
+                .ticks(5)
+                .tickSize(-(height - margin.top - margin.bottom))
+                .tickFormat("")
+        )
+        .selectAll("line")
+        .style("stroke", "#e2e8f0")
+        .style("stroke-dasharray", "3 3");
+
+    svg.select(".grid .domain").remove();
+
+    // =====================
+    // ZERO LINE (garis profit = 0)
+    // =====================
+
+    svg.append("line")
+        .attr("x1", margin.left)
+        .attr("x2", width - margin.right)
+        .attr("y1", y(0))
+        .attr("y2", y(0))
+        .attr("stroke", "#ef4444")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", "5 4")
+        .attr("opacity", 0.6);
+
+    svg.append("text")
+        .attr("x", width - margin.right + 4)
+        .attr("y", y(0) + 4)
+        .style("font-size", "9px")
+        .style("fill", "#ef4444")
+        .style("font-weight", "600")
+        .text("Break-even");
+
+    // =====================
+    // AXIS
+    // =====================
+
+    svg.append("g")
+        .attr(
+            "transform",
+            `translate(0, ${height - margin.bottom})`
+        )
+        .call(
+            d3.axisBottom(x)
+                .ticks(5)
+                .tickFormat(d =>
+                    "$" + (d / 1000000).toFixed(1) + "M"
+                )
+        )
+        .selectAll("text")
+        .style("font-size", "10px")
+        .style("fill", "#64748b");
+
+    svg.append("g")
+        .attr(
+            "transform",
+            `translate(${margin.left}, 0)`
+        )
+        .call(
+            d3.axisLeft(y)
+                .ticks(5)
+                .tickFormat(d =>
+                    "$" + (d / 1000).toFixed(0) + "K"
+                )
+        )
+        .selectAll("text")
+        .style("font-size", "10px")
+        .style("fill", "#64748b");
+
+    // =====================
+    // AXIS LABEL
+    // =====================
+
+    svg.append("text")
+        .attr("x", (width + margin.left - margin.right) / 2)
+        .attr("y", height - 8)
+        .attr("text-anchor", "middle")
+        .style("font-size", "11px")
+        .style("fill", "#64748b")
+        .style("font-weight", "500")
+        .text("Total Sales");
+
+    svg.append("text")
+        .attr("transform", "rotate(-90)")
+        .attr("x", -(height - margin.bottom + margin.top) / 2)
+        .attr("y", 15)
+        .attr("text-anchor", "middle")
+        .style("font-size", "11px")
+        .style("fill", "#64748b")
+        .style("font-weight", "500")
+        .text("Total Profit");
+
+    // =====================
+    // COLOR SCALE
+    // =====================
+
+    const colors = [
+        "#2563eb",
+        "#10b981",
+        "#f59e0b",
+        "#8b5cf6",
+        "#ef4444"
+    ];
+
+    // =====================
+    // DOTS
+    // =====================
+
+    svg.selectAll(".scatter-dot")
+        .data(chartData)
+        .enter()
+        .append("circle")
+
+        .attr("class", "scatter-dot")
+
+        .attr("cx", d => x(d.sales))
+
+        .attr("cy", d => y(d.profit))
+
+        .attr("r", 9)
+
+        .attr(
+            "fill",
+            (d, i) => colors[i % colors.length]
+        )
+
+        .attr("opacity", 0.82)
+
+        .attr("stroke", "#ffffff")
+
+        .attr("stroke-width", 2)
+
+        .style("cursor", "pointer")
+
+        .on("mouseover", function (event, d) {
+
+            d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", 13)
+                .attr("opacity", 1);
+
+            showTooltip(event, `
+                <span class="tooltip-icon">🎯</span>
+                <span class="tooltip-title">${d.name}</span>
+                <div>
+                    <span class="tooltip-label">Sales</span><br>
+                    <span class="tooltip-value">
+                        $${Math.round(d.sales).toLocaleString()}
+                    </span>
+                </div>
+                <div style="margin-top:6px">
+                    <span class="tooltip-label">Profit</span><br>
+                    <span class="${d.profit < 0 ? 'tooltip-loss' : 'tooltip-profit'}">
+                        $${Math.round(d.profit).toLocaleString()}
+                    </span>
+                </div>
+                <div style="margin-top:6px">
+                    <span class="tooltip-label">Margin</span><br>
+                    <span class="tooltip-value">
+                        ${d.sales > 0 ? ((d.profit / d.sales) * 100).toFixed(1) : 0}%
+                    </span>
+                </div>
+            `);
+
+        })
+
+        .on("mousemove", moveTooltip)
+
+        .on("mouseout", function () {
+
+            d3.select(this)
+                .transition()
+                .duration(150)
+                .attr("r", 9)
+                .attr("opacity", 0.82);
+
+            hideTooltip();
+
+        });
+
+    // =====================
+    // LABEL NAMA SUBKATEGORI
+    // =====================
+
+    svg.selectAll(".scatter-label")
+        .data(chartData)
+        .enter()
+        .append("text")
+
+        .attr("class", "scatter-label")
+
+        .attr("x", d => x(d.sales) + 12)
+
+        .attr("y", d => y(d.profit) + 4)
+
+        .style("font-size", "9.5px")
+
+        .style("fill", "#334155")
+
+        .style("font-weight", "600")
+
+        .text(d => d.name);
+
+    // INSIGHT BOX
+    const lossDots = chartData.filter(d => d.profit < 0);
+    const lossNote = lossDots.length > 0
+        ? `<strong>${lossDots.map(d => d.name).join(", ")}</strong> berada di bawah garis break-even — sales tinggi belum tentu menghasilkan profit. `
+        : "";
+    renderChartInsight(
+        "chartScatter",
+        "Sales vs Profit",
+        `${lossNote}Titik-titik yang jauh ke kanan namun rendah secara vertikal menunjukkan efisiensi profit yang lemah. Fokuskan perhatian pada subkategori dengan rasio profit/sales terbaik untuk memaksimalkan margin.`
+    );
+
+}
+
+// ==========================
+// HELPER: CHART INSIGHT BOX
+// ==========================
+
+function renderChartInsight(cardId, label, text) {
+
+    const card = document.getElementById(cardId);
+    if (!card) return;
+
+    const old = card.querySelector(".chart-insight-box");
+    if (old) old.remove();
+
+    const box = document.createElement("div");
+    box.className = "chart-insight-box";
+    box.innerHTML = `
+        <span class="chart-insight-label">
+            📊 ${label}
+        </span>
+        <p>${text}</p>
+    `;
+
+    card.appendChild(box);
 
 }
