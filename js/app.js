@@ -2029,14 +2029,12 @@ function renderSubcategoryChart(data) {
 function renderSalesTrend(data) {
 
     const svg =
-        d3.select(
-            "#salesTrendChart"
-        );
+        d3.select("#salesTrendChart");
 
     svg.selectAll("*").remove();
 
-    const width = 500;
-    const height = 300;
+    const width = 900;
+    const height = 420;
 
     svg.attr(
         "viewBox",
@@ -2046,6 +2044,10 @@ function renderSalesTrend(data) {
     const chartData =
         data.salesTrend;
 
+    // ==========================
+    // SCALE
+    // ==========================
+
     const x =
         d3.scalePoint()
             .domain(
@@ -2053,7 +2055,7 @@ function renderSalesTrend(data) {
                     d => d.OrderDate
                 )
             )
-            .range([50, 450]);
+            .range([70, 850]);
 
     const y =
         d3.scaleLinear()
@@ -2062,12 +2064,120 @@ function renderSalesTrend(data) {
                 d3.max(
                     chartData,
                     d => d.Sales
-                )
+                ) * 1.1
             ])
-            .range([250, 20]);
+            .range([350, 20]);
+
+    // ==========================
+    // GRADIENT
+    // ==========================
+
+    const defs =
+        svg.append("defs");
+
+    const gradient =
+        defs.append("linearGradient")
+            .attr("id", "salesGradient")
+            .attr("x1", "0%")
+            .attr("y1", "0%")
+            .attr("x2", "0%")
+            .attr("y2", "100%");
+
+    gradient.append("stop")
+        .attr("offset", "0%")
+        .attr("stop-color", "#2563eb")
+        .attr("stop-opacity", 0.18);
+
+    gradient.append("stop")
+        .attr("offset", "100%")
+        .attr("stop-color", "#2563eb")
+        .attr("stop-opacity", 0);
+
+    // ==========================
+    // GRID
+    // ==========================
+
+    svg.append("g")
+        .attr("class", "grid")
+        .attr(
+            "transform",
+            "translate(70,0)"
+        )
+        .call(
+            d3.axisLeft(y)
+                .tickSize(-780)
+                .tickFormat("")
+        )
+        .selectAll("line")
+        .attr(
+            "stroke",
+            "#e2e8f0"
+        );
+
+    // ==========================
+    // AREA
+    // ==========================
+
+    const area =
+        d3.area()
+            .curve(
+                d3.curveMonotoneX
+            )
+            .x(
+                d => x(d.OrderDate)
+            )
+            .y0(350)
+            .y1(
+                d => y(d.Sales)
+            );
+
+    svg.append("path")
+        .datum(chartData)
+        .attr(
+            "fill",
+            "url(#salesGradient)"
+        )
+        .attr(
+            "d",
+            area
+        );
+
+    // ==========================
+    // AVERAGE LINE
+    // ==========================
+
+    const avgSales =
+        d3.mean(
+            chartData,
+            d => d.Sales
+        );
+
+    svg.append("line")
+        .attr("x1", 70)
+        .attr("x2", 850)
+        .attr("y1", y(avgSales))
+        .attr("y2", y(avgSales))
+        .attr("stroke", "#94a3b8")
+        .attr("stroke-width", 1.5)
+        .attr("stroke-dasharray", "8,6");
+
+    svg.append("text")
+        .attr("x", 850)
+        .attr("y", y(avgSales) - 10)
+        .attr("text-anchor", "end")
+        .attr("fill", "#64748b")
+        .attr("font-size", "11px")
+        .text("Average Sales");
+
+    // ==========================
+    // LINE
+    // ==========================
 
     const line =
         d3.line()
+            .curve(
+                d3.curveMonotoneX
+            )
             .x(
                 d => x(d.OrderDate)
             )
@@ -2078,97 +2188,47 @@ function renderSalesTrend(data) {
     svg.append("path")
         .datum(chartData)
         .attr("fill", "none")
-        .attr(
-            "stroke",
-            "#2563eb"
-        )
-        .attr(
-            "stroke-width",
-            2
-        )
-        .attr(
-            "d",
-            line
-        );
-
-    svg.append("g")
-        .attr(
-            "transform",
-            "translate(0,250)"
-        )
-        .call(
-            d3.axisBottom(x)
-                .tickValues(
-                    chartData
-                        .filter(
-                            (d, i) => i % 6 === 0
-                        )
-                        .map(
-                            d => d.OrderDate
-                        )
-                )
-        );
-
-    svg.append("g")
-        .attr(
-            "transform",
-            "translate(50,0)"
-        )
-        .call(
-            d3.axisLeft(y)
-        );
+        .attr("stroke", "#2563eb")
+        .attr("stroke-width", 1.8)
+        .attr("d", line);
 
     // ==========================
-    // HOVER DOTS + TOOLTIP
+    // DOTS
     // ==========================
 
     svg.selectAll(".trend-dot")
         .data(chartData)
         .enter()
         .append("circle")
-
         .attr(
             "class",
             "trend-dot"
         )
-
         .attr(
             "cx",
             d => x(d.OrderDate)
         )
-
         .attr(
             "cy",
             d => y(d.Sales)
         )
-
-        .attr("r", 5)
-
+        .attr("r", 4)
         .attr(
             "fill",
-            "#2563eb"
-        )
-
-        .attr(
-            "stroke",
             "#ffffff"
         )
-
+        .attr(
+            "stroke",
+            "#2563eb"
+        )
         .attr(
             "stroke-width",
             2
         )
-
-        .style(
-            "opacity",
-            0
-        )
-
         .style(
             "cursor",
             "pointer"
         )
-
         .on(
             "mouseover",
             function (event, d) {
@@ -2176,16 +2236,13 @@ function renderSalesTrend(data) {
                 d3.select(this)
                     .transition()
                     .duration(150)
-                    .attr("r", 8)
-                    .style(
-                        "opacity",
-                        1
-                    );
+                    .attr("r", 6);
 
                 showTooltip(
                     event,
                     `
                     <span class="tooltip-icon">📈</span>
+
                     <span class="tooltip-title">
                         ${d.OrderDate}
                     </span>
@@ -2210,12 +2267,10 @@ function renderSalesTrend(data) {
 
             }
         )
-
         .on(
             "mousemove",
             moveTooltip
         )
-
         .on(
             "mouseout",
             function () {
@@ -2223,25 +2278,74 @@ function renderSalesTrend(data) {
                 d3.select(this)
                     .transition()
                     .duration(150)
-                    .attr("r", 5)
-                    .style(
-                        "opacity",
-                        0
-                    );
+                    .attr("r", 4);
 
                 hideTooltip();
 
             }
         );
 
-    // INSIGHT BOX
-    const trend = data.salesTrend;
-    const peak = trend.reduce((a, b) => a.Sales > b.Sales ? a : b);
-    const drop = trend.find(d => d.OrderDate === "2004-07");
+    // ==========================
+    // AXIS X
+    // ==========================
+
+    svg.append("g")
+        .attr(
+            "transform",
+            "translate(0,350)"
+        )
+        .call(
+            d3.axisBottom(x)
+                .tickValues(
+                    chartData
+                        .filter(
+                            (d, i) => i % 6 === 0
+                        )
+                        .map(
+                            d => d.OrderDate
+                        )
+                )
+        );
+
+    // ==========================
+    // AXIS Y
+    // ==========================
+
+    svg.append("g")
+        .attr(
+            "transform",
+            "translate(70,0)"
+        )
+        .call(
+            d3.axisLeft(y)
+                .ticks(5)
+        );
+
+    // ==========================
+    // INSIGHT
+    // ==========================
+
+    const trend =
+        data.salesTrend;
+
+    const peak =
+        trend.reduce(
+            (a, b) =>
+                a.Sales > b.Sales
+                    ? a
+                    : b
+        );
+
+    const drop =
+        trend.find(
+            d =>
+                d.OrderDate === "2004-07"
+        );
+
     renderChartInsight(
         "chartTrend",
         "Sales Trend",
-        `Puncak penjualan terjadi pada <strong>${peak.OrderDate}</strong> dengan total <strong>$${Math.round(peak.Sales).toLocaleString()}</strong>. ${drop ? `Anomali penurunan tajam terdeteksi pada <strong>2004-07</strong> ($${Math.round(drop.Sales).toLocaleString()}) — perlu investigasi lebih lanjut apakah terkait data tidak lengkap atau kondisi bisnis.` : ""}`
+        `Puncak penjualan terjadi pada <strong>${peak.OrderDate}</strong> dengan total <strong>$${Math.round(peak.Sales).toLocaleString()}</strong>. ${drop ? `Anomali penurunan tajam terdeteksi pada <strong>2004-07</strong> ($${Math.round(drop.Sales).toLocaleString()}) sehingga perlu investigasi lebih lanjut.` : ""}`
     );
 
 }
@@ -2271,6 +2375,7 @@ function renderScatterPlot(data) {
         "viewBox",
         `0 0 ${width} ${height}`
     );
+
 
     const raw =
         data.scatterData || [];
