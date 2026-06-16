@@ -87,3 +87,97 @@ export default async function handler(
     }
 
 }
+function localBusinessAnswer(question, data) {
+
+    const q = question.toLowerCase();
+
+    // Territory profit terendah
+
+    if (
+        q.includes("profit terendah") &&
+        q.includes("wilayah")
+    ) {
+
+        const lowest =
+            [...data.territoryProfit]
+                .sort((a, b) =>
+                    a.Profit - b.Profit
+                )[0];
+
+        return `
+📊 Insight
+
+Wilayah dengan profit terendah adalah
+<b>${lowest.Territory}</b>.
+
+📌 Evidence
+
+Profit sebesar
+<b>$${Math.round(lowest.Profit).toLocaleString()}</b>
+
+🚀 Recommendation
+
+Lakukan evaluasi strategi penjualan
+dan efektivitas promosi di wilayah ini.
+`;
+    }
+
+    // Territory tertinggi
+
+    if (
+        q.includes("profit tertinggi") &&
+        q.includes("wilayah")
+    ) {
+
+        const top =
+            data.territoryProfit[0];
+
+        return `
+📊 Insight
+
+Wilayah dengan profit tertinggi adalah
+<b>${top.Territory}</b>.
+
+📌 Evidence
+
+Profit mencapai
+<b>$${Math.round(top.Profit).toLocaleString()}</b>
+
+🚀 Recommendation
+
+Replikasi strategi wilayah ini
+ke territory lainnya.
+`;
+    }
+
+    // Top category
+
+    if (
+        q.includes("kategori") &&
+        (
+            q.includes("terbaik") ||
+            q.includes("tertinggi")
+        )
+    ) {
+
+        return `
+📊 Insight
+
+Kategori terbaik adalah
+<b>${data.topCategory.name}</b>.
+
+📌 Evidence
+
+Berkontribusi sebesar
+<b>${data.topCategory.percentage}%</b>
+terhadap revenue.
+
+🚀 Recommendation
+
+Pertahankan investasi dan promosi
+pada kategori ini.
+`;
+    }
+
+    return null;
+}
