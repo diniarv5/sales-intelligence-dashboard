@@ -80,17 +80,57 @@
 
                 <div class="filter-group">
 
-                    <label>Order Date From</label>
+                    <label>Mode Periode</label>
 
-                    <input type="date" id="dateFrom" value="2001-01-01">
+                    <select id="dateMode">
+
+                        <option value="full" selected>
+                            Tanggal Lengkap
+                        </option>
+
+                        <option value="month">
+                            Bulan & Tahun
+                        </option>
+
+                        <option value="year">
+                            Tahun Saja
+                        </option>
+
+                    </select>
 
                 </div>
 
-                <div class="filter-group">
+                <div class="filter-group" id="periodFromGroup">
 
-                    <label>Order Date To</label>
+                    <label>Dari Periode</label>
 
-                    <input type="date" id="dateTo" value="2004-12-31">
+                    <input type="date" id="dateFrom" value="2001-07-01">
+
+                    <input type="month" id="monthFrom" value="2001-07" style="display: none;">
+
+                    <select id="yearFrom" style="display: none;">
+                        <option value="2001" selected>2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004">2004</option>
+                    </select>
+
+                </div>
+
+                <div class="filter-group" id="periodToGroup">
+
+                    <label>Sampai Periode</label>
+
+                    <input type="date" id="dateTo" value="2004-07-31">
+
+                    <input type="month" id="monthTo" value="2004-07" style="display: none;">
+
+                    <select id="yearTo" style="display: none;">
+                        <option value="2001">2001</option>
+                        <option value="2002">2002</option>
+                        <option value="2003">2003</option>
+                        <option value="2004" selected>2004</option>
+                    </select>
 
                 </div>
 
